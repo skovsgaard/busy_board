@@ -5,7 +5,7 @@ defmodule BusyBoard.Server do
 
   def start_link do
     :ets.new :people, [:set, :named_table]
-    ~w(Niels Caroline Matt Kasper Jonas)a
+    ~w(Niels Caroline Matt Kasper AK Jonas)a
       |> Enum.each(fn name -> :ets.insert(:people, {name, :available}) end)
 
     GenServer.start_link(@mod, :people, name: @mod)
@@ -18,7 +18,9 @@ defmodule BusyBoard.Server do
   # OTP callbacks
 
   def handle_call(:all, _from, table) do
-    everyone = :ets.foldr fn name_pair, acc -> acc ++ [name_pair] end, [], table
+    everyone = :ets.foldr fn {name, status}, acc ->
+      acc ++ [%{name: name, status: status}]
+    end, [], table
     {:reply, everyone, table}
   end
 end

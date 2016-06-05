@@ -1,0 +1,18 @@
+header.row {
+  margin-top: 25px;
+}
+
+div.status-box {
+  height: 12em;
+  margin: 5%;
+  margin-left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+div.available {
+  background-color: #aaf9aa;
+}
+
+h4 {margin: 0;}

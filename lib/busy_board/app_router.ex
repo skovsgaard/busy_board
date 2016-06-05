@@ -19,15 +19,18 @@ defmodule BusyBoard.Router do
     |> send_resp(200, System.cwd |> Path.join(~w(priv / static / index.html)) |> File.read!)
   end
   
-  get "/status" do
-    conn
-    |> put_resp_content_type("application/json")
-    |> send_resp(200, Server.all |> Enum.into(%{}) |> Poison.encode!)
-  end
+  get "/api", do: api_all(conn)
+  get "/api/all", do: api_all(conn)
   
   match _ do
     conn
     |> put_resp_content_type("application/json")
     |> send_resp(404, @fourohfour)
+  end
+
+  defp api_all(conn) do
+    conn
+    |> put_resp_content_type("application/json")
+    |> send_resp(200, Server.all |> Poison.encode!)
   end
 end
