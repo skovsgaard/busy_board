@@ -1,6 +1,6 @@
 (() => {
   renderPerson = (person) => {
-    var color = person.status ? "available" : "unavailable"
+    var color = person.status === "available" ? "available" : "unavailable"
     util.append({
       query: ".box-row:last-child",
       tag: "article",

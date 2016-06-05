@@ -5,8 +5,10 @@ defmodule BusyBoard.Server do
 
   def start_link do
     :ets.new :people, [:set, :named_table]
-    ~w(Niels Caroline Matt Kasper AK Jonas)a
+    ~w(Niels Caroline Matt Kasper AK)a
       |> Enum.each(fn name -> :ets.insert(:people, {name, :available}) end)
+
+    :ets.insert(:people, {:Jonas, :unavailable})
 
     GenServer.start_link(@mod, :people, name: @mod)
   end
