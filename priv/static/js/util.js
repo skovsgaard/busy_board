@@ -1,3 +1,5 @@
+NodeList.prototype.forEach = NodeList.prototype.forEach || Array.prototype.forEach
+
 util = {
   append: function(opts) {
     var el = document.createElement(opts.tag || "div")
@@ -13,6 +15,10 @@ util = {
         return i % n ? [] : [arr.slice(i, i + n)]
       })
     )
+  },
+
+  errMsg: function(msg) {
+    return this.str('<article class="err-msg u-full-width">', msg, '</article>')
   },
 
   getJSON: function(url, cb) {

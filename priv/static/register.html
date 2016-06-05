@@ -1,0 +1,49 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>BusyBoard</title>
+    <meta name="description" content="Who's busy?">
+    <meta name="author" content="jsc">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Raleway:400,300,600' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/skeleton.css">
+    <link rel="stylesheet" href="/css/core.css" media="screen">
+    <link rel="icon" type="image/png" href="/img/favicon.png">
+  </head>
+  <body>
+    <div class="container">
+      <header class="row">
+        <div class="twelve columns">
+          <h1>BusyBoard - Register!</h1>
+	</div>
+      </header>
+      <form action="" method="post">
+        <section class="row">
+          <div class="six columns">
+            <label for="register-name">Your name</label>
+            <input type="text" class="u-full-width" placeholder="Your name goes here" id="register-name" max-length=20>
+	  </div>
+	  <div class="six columns">
+	    <label for="register-username">The name you want to log in with</label>
+	    <input type="text" class="u-full-width" placeholder="Your username" id="register-username" max-length=20>
+          </div>
+        </section>
+	<section class="row">
+	  <div class="six columns">
+	    <label for="register-password">And a password</label>
+	    <input type="password" class="u-full-width" placeholder="Your password" id="register-password">
+	  </div>
+	  <div class="six columns">
+	    <label for="repeat-password">And password again</label>
+	    <input type="password" class="u-full-width" placeholder="Your password again" id="repeat-password">
+	  </div>
+	</section>
+	<input type="submit" value="Register!" class="button" id="register-button">
+      </form>
+    </div>
+    <script src="/js/util.js"></script>
+    <script src="/js/register.js"></script>
+  </body>
+</html>

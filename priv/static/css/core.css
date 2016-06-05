@@ -6,6 +6,7 @@ div.status-box {
   height: 12em;
   margin: 5%;
   margin-left: 0;
+  border-radius: 4px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -15,4 +16,32 @@ div.available {
   background-color: #aaf9aa;
 }
 
+div.unavailable {
+  background-color: #f9aaaa;
+}
+
 h4 {margin: 0;}
+
+footer.footer-row {
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: left;
+}
+
+a.register-button {
+  margin-left: 20px;
+}
+
+input:invalid {
+  border-color: #f9aaaa;
+}
+
+.err-msg {
+  display: flex;
+  align-content: center;
+  margin-bottom: 20px;
+  padding: 8px 0 8px 12px;
+  border-radius: 4px;
+  background-color: #f9aaaa;
+}
