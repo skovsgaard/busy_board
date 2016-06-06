@@ -4,18 +4,21 @@ defmodule BusyBoard.Server do
   @mod __MODULE__
 
   def start_link do
-    :ets.new :people, [:set, :named_table]
-    ~w(Niels Caroline Matt Kasper AK)a
-      |> Enum.each(fn name -> :ets.insert(:people, {name, :available}) end)
+    table = :people
+    {:ok, pid} = GenServer.start_link(@mod, table, name: @mod)
 
-    :ets.insert(:people, {:Jonas, :unavailable})
+    table
+    |> :ets.new([:named_table, :protected])
+    |> :ets.give_away(pid, :ok)
 
-    GenServer.start_link(@mod, :people, name: @mod)
+    {:ok, pid}
   end
 
   # Client API
 
   def all, do: GenServer.call(@mod, :all)
+
+  def put(person), do: GenServer.call(@mod, {:put, person})
 
   # OTP callbacks
 
@@ -24,5 +27,11 @@ defmodule BusyBoard.Server do
       acc ++ [%{name: name, status: status}]
     end, [], table
     {:reply, everyone, table}
+  end
+
+  def handle_call({:put, person}, _from, table) do
+    :ets.insert table,
+      {person["name"] |> String.to_atom, :unavailable}
+    {:reply, :ok, table}
   end
 end

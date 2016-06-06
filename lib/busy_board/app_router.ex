@@ -1,4 +1,4 @@
-defmodule BusyBoard.Router do
+defmodule BusyBoard.AppRouter do
   use Plug.Router
   alias BusyBoard.Server
   
@@ -17,13 +17,18 @@ defmodule BusyBoard.Router do
   get "/" do
     send_html conn,
       200,
-      read_html_file("index.html")
+      read_static("index.html")
   end
 
   get "/register" do
     send_html conn,
       200,
-      read_html_file("register.html")
+      read_static("register.html")
+  end
+
+  post "/register" do
+    Server.put conn.params
+    redirect(conn, "/")
   end
 
   # JSON routes
@@ -34,6 +39,12 @@ defmodule BusyBoard.Router do
   match _, do: send_json(conn, 404, @fourohfour)
 
   # Private helpers
+
+  defp redirect(conn, path) do
+    conn
+    |> Plug.Conn.put_resp_header("location", path)
+    |> Plug.Conn.resp(302, "")
+  end
 
   defp send_html(conn, status, content) do
     conn
@@ -47,7 +58,7 @@ defmodule BusyBoard.Router do
     |> send_resp(status, content)
   end
 
-  defp read_html_file(filename) do
+  defp read_static(filename) do
     System.cwd
     |> Path.join(~w(priv / static /) ++ [filename])
     |> File.read!
