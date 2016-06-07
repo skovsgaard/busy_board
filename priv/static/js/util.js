@@ -21,24 +21,24 @@ util = {
     return this.str('<article class="err-msg u-full-width">', msg, '</article>')
   },
 
-  getJSON: function(url, cb) {
-    var request = new XMLHttpRequest();
-    request.open('GET', url, true);
-    
+  jsonXHR: function(method, url, cb) {
+    var request = new XMLHttpRequest()
+    request.open(method, url, true)
+
     request.onload = function() {
       if (this.status >= 200 && this.status < 400) {
-        var data = JSON.parse(this.response);
-	return cb(null, data)
+        var data = JSON.parse(this.response)
+        return cb(null, data)
       } else {
-	return cb(new Error("Request failed with status " + this.status))
+        return cb(new Error("Request failed with status " + this.status))
       }
-    };
-    
+    }
+
     request.onerror = function() {
       return cb(new Error("Request failed with status " + this.status))
-    };
-    
-    request.send();
+    }
+
+    request.send()
   },
 
   str: function() {

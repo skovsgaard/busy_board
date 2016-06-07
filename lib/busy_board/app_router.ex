@@ -34,8 +34,10 @@ defmodule BusyBoard.AppRouter do
   # JSON routes
   
   get "/api", do: api_all(conn)
-  get "/api/all", do: api_all(conn)
-  
+  get "/api/people", do: api_all(conn)
+
+  post "/api/people/:name", do: api_toggle(conn, name)
+
   match _, do: send_json(conn, 404, @fourohfour)
 
   # Private helpers
@@ -65,4 +67,7 @@ defmodule BusyBoard.AppRouter do
   end
 
   defp api_all(conn), do: send_json(conn, 200, Server.all |> Poison.encode!)
+
+  defp api_toggle(conn, name),
+    do: send_json(conn, 200, Server.toggle(name) |> Poison.encode!)
 end

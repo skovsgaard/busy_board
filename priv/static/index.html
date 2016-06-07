@@ -24,8 +24,15 @@
     </div>
     <div class="container">
       <footer class="row footer-row">
-	<span>Don't see your name on the board?</span>
-	<a class="button register-button" href="/register">Sign up here :)</a>
+	<article class="four columns">
+	  <span>Don't see your name on the board?</span>
+	</article>
+	<article class="six columns">
+	  <form action="/register" method="post">
+	    <input type="text" placeholder="Enter your name here!" name="name" max-length=20>
+	    <input type="submit" value="Get on the board!" class="button" name="button">
+	  </form>
+	</article>
       </footer>
     </div>
     <script src="/js/util.js"></script>
