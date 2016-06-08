@@ -1,6 +1,6 @@
 NodeList.prototype.forEach = NodeList.prototype.forEach || Array.prototype.forEach
 
-util = {
+const util = {
   append: function(opts) {
     var el = document.createElement(opts.tag || "div")
     el.className = opts.class || ""
