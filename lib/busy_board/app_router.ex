@@ -20,12 +20,6 @@ defmodule BusyBoard.AppRouter do
       read_static("index.html")
   end
 
-  get "/register" do
-    send_html conn,
-      200,
-      read_static("register.html")
-  end
-
   post "/register" do
     Server.put conn.params
     redirect(conn, "/")
