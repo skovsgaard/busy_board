@@ -21,26 +21,6 @@ const util = {
     return this.str('<article class="err-msg u-full-width">', msg, '</article>')
   },
 
-  jsonXHR: function(method, url, cb) {
-    var request = new XMLHttpRequest()
-    request.open(method, url, true)
-
-    request.onload = function() {
-      if (this.status >= 200 && this.status < 400) {
-        var data = JSON.parse(this.response)
-        return cb(null, data)
-      } else {
-        return cb(new Error("Request failed with status " + this.status))
-      }
-    }
-
-    request.onerror = function() {
-      return cb(new Error("Request failed with status " + this.status))
-    }
-
-    request.send()
-  },
-
   renderPerson: function(person) {
     var color = person.status === "available" ? "available" : "unavailable"
     util.append({
@@ -67,7 +47,7 @@ const util = {
        class: "row box-row",
      })
 
-     chunk.forEach(this.renderPerson)
+     chunk.forEach(util.renderPerson)
     })
   },
 
