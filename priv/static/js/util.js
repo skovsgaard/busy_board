@@ -56,14 +56,13 @@ const util = {
   toggleAvailability: function(name) {
     var currClass = function(setter) {
       if (setter) {
-	document
-	  .getElementById(util.str(name, "-status"))
-	  .className = setter
-      } else {
 	return document
 	  .getElementById(util.str(name, "-status"))
-	  .className
+	  .className = setter
       }
+      return document
+        .getElementById(util.str(name, "-status"))
+        .className
     }
 
     if (currClass() == "status-box available") {
