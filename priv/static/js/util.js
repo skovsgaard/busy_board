@@ -31,9 +31,6 @@ const util = {
 	'</div>'
       )
     })
-    document
-      .getElementById(util.str(person.name, "-status"))
-      .addEventListener("click", (ce) => util.toggleAvailability(person.name))
   },
 
   renderPeople: function(people) {
@@ -47,6 +44,15 @@ const util = {
 
      chunk.forEach(util.renderPerson)
     })
+
+    return people;
+  },
+
+  setPersonClick: function(person) {
+    document
+      .getElementById(util.str(person.name, "-status"))
+      .addEventListener("click", (ce) => util.toggleAvailability(person.name))
+
   },
 
   str: function() {
