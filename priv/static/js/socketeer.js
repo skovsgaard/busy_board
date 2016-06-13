@@ -3,6 +3,7 @@ const socketeer = function(url) {
 
   ws.onopen = (openEvent) => ws.send("all")
   ws.onmessage = (msgEvent) => {
+    console.log(msgEvent.data)
     util
       .renderPeople(JSON.parse(msgEvent.data))
       .forEach((person) => util.setPersonClick(person, ws))

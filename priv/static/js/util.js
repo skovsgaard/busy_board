@@ -7,6 +7,15 @@ const util = {
     return el
   },
 
+  blankBoard: function() {
+    util.removeByClass(".box-row")
+    util.append({
+      query: ".container",
+      tag: "section",
+      class: "row box-row",
+    })
+  },
+
   chunk: function(arr, n = 1) {
     return [].concat.apply([],
       arr.map((el, i) => {
@@ -17,6 +26,11 @@ const util = {
 
   errMsg: function(msg) {
     return this.str('<article class="err-msg u-full-width">', msg, '</article>')
+  },
+
+  removeByClass: function(className){
+    var nodeArr = [].slice.call(document.querySelectorAll(className))
+    nodeArr.forEach((el) => el.parentNode.removeChild(el))
   },
 
   renderPerson: function(person) {
@@ -34,15 +48,16 @@ const util = {
   },
 
   renderPeople: function(people) {
+    util.blankBoard()
+
     util.chunk(people, 3).forEach((chunk) => {
+      util.append({
+        query: ".container",
+        tag: "section",
+        class: "row box-row",
+      })
 
-     util.append({
-       query: ".container",
-       tag: "section",
-       class: "row box-row",
-     })
-
-     chunk.forEach(util.renderPerson)
+      chunk.forEach(util.renderPerson)
     })
 
     return people;
@@ -54,7 +69,7 @@ const util = {
       .addEventListener("click", (ce) => {
 	var status = util.toggleAvailability(person.name).split(" ")[1]
 	console.log("Sending an update on " + person.name + " with " + status)
-	ws.send(util.str("update:", person.name, ",", status))
+	ws.send(util.str("put:", person.name, ",", status))
       })
   },
 

@@ -17,6 +17,13 @@ defmodule BusyBoard.Websocket do
     {:reply, {:text, all_people}, req, state}
   end
 
+  def websocket_handle({:text, "put:" <> pair}, req, state) do
+    [name, status] = String.split(pair, ",")
+    Server.put({name, status})
+    {:ok, all_people} = Server.all |> Poison.encode
+    {:reply, {:text, all_people}, req, state}
+  end
+
   def websocket_handle({:text, "ping"}, req, state),
     do: {:reply, {:text, "pong"}, req, state}
 

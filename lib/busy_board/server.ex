@@ -25,15 +25,16 @@ defmodule BusyBoard.Server do
   # OTP callbacks
 
   def handle_call(:all, _from, table) do
-    everyone = :ets.foldr fn {name, status}, acc ->
-      acc ++ [%{name: name, status: status}]
-    end, [], table
-    {:reply, everyone, table}
+    {:reply, all_people(table), table}
+  end
+
+  def handle_call({:put, {name, status}}, _from, table) do
+    :ets.insert table, {name, status}
+    {:reply, table |> all_people |> Poison.encode!, table}
   end
 
   def handle_call({:put, person}, _from, table) do
-    :ets.insert table,
-      {person["name"], :unavailable}
+    :ets.insert table, {person["name"], :unavailable}
     {:reply, :ok, table}
   end
 
@@ -44,6 +45,12 @@ defmodule BusyBoard.Server do
   end
 
   # Private helpers
+
+  defp all_people(table) do
+    :ets.foldr fn {name, status}, acc ->
+      acc ++ [%{name: name, status: status}]
+    end, [], table
+  end
 
   defp toggle_status(:available), do: :unavailable
   defp toggle_status(:unavailable), do: :available
