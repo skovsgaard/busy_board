@@ -48,11 +48,14 @@ const util = {
     return people;
   },
 
-  setPersonClick: function(person) {
+  setPersonClick: function(person, ws) {
     document
       .getElementById(util.str(person.name, "-status"))
-      .addEventListener("click", (ce) => util.toggleAvailability(person.name))
-
+      .addEventListener("click", (ce) => {
+	var status = util.toggleAvailability(person.name).split(" ")[1]
+	console.log("Sending an update on " + person.name + " with " + status)
+	ws.send(util.str("update:", person.name, ",", status))
+      })
   },
 
   str: function() {
@@ -72,9 +75,9 @@ const util = {
     }
 
     if (currClass() == "status-box available") {
-      currClass("status-box unavailable")
+      return currClass("status-box unavailable")
     } else {
-      currClass("status-box available")
+      return currClass("status-box available")
     }
   }
 }

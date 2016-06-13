@@ -5,7 +5,7 @@ const socketeer = function(url) {
   ws.onmessage = (msgEvent) => {
     util
       .renderPeople(JSON.parse(msgEvent.data))
-      .forEach(util.setPersonClick)
+      .forEach((person) => util.setPersonClick(person, ws))
   }
   ws.onerror = (errEvent) => console.log(err)
 }
