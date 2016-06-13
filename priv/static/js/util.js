@@ -73,6 +73,15 @@ const util = {
       })
   },
 
+  setRegisterClick: function(ws) {
+    document
+      .querySelector("#button")
+      .addEventListener("click", (ce) => {
+	var personName = document.querySelector("#name").value
+	ws.send("put:" + personName + "," + "unavailable")
+      })
+  },
+
   str: function() {
     return [].reduce.call(arguments, (i, acc) => [i, acc].join(''))
   },
