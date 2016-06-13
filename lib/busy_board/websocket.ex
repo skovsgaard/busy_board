@@ -3,12 +3,15 @@ defmodule BusyBoard.Websocket do
 
   @behaviour :cowboy_websocket_handler
 
+  @ws_key {__MODULE__, :broadcast}
+
   # OTP behaviour callbacks
 
   def init(_, _req, _opts), do: {:upgrade, :protocol, :cowboy_websocket}
 
   def websocket_init(_type, req, _opts) do
     state = %{}
+    subscribe
     {:ok, req, state}
   end
 
@@ -21,6 +24,7 @@ defmodule BusyBoard.Websocket do
     [name, status] = String.split(pair, ",")
     Server.put({name, status})
     {:ok, all_people} = Server.all |> Poison.encode
+    broadcast(all_people)
     {:reply, {:text, all_people}, req, state}
   end
 
@@ -32,7 +36,19 @@ defmodule BusyBoard.Websocket do
     {:ok, req, state}
   end
 
+  def websocket_info({_pid, @ws_key, msg}, req, state) do
+    IO.inspect(msg) ; {:reply, {:text, msg}, req, state}
+  end
+
   def websocket_info(msg, req, state), do: {:reply, {:text, msg}, req, state}
 
   def websocket_terminate(_reason, _req, _state), do: :ok
+
+  # Gproc helpers
+
+  defp subscribe, do: :gproc.reg({:p, :l, @ws_key})
+
+  defp broadcast(msg) do
+    :gproc.send({:p, :l, @ws_key}, {self(), @ws_key, msg})
+  end
 end

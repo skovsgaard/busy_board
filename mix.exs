@@ -14,7 +14,7 @@ defmodule BusyBoard.Mixfile do
   #
   # Type "mix help compile.app" for more information
   def application do
-    [applications: [:logger, :cowboy, :plug],
+    [applications: [:logger, :cowboy, :plug, :gproc],
      mod: {BusyBoard, []}]
   end
 
@@ -31,7 +31,8 @@ defmodule BusyBoard.Mixfile do
     [
       {:plug, "~> 1.1"},
       {:cowboy, "~> 1.0"},
-      {:poison, "~> 2.1"}
+      {:poison, "~> 2.1"},
+      {:gproc, "~> 0.5"}
     ]
   end
 end
