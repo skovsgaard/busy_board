@@ -32,12 +32,11 @@ defmodule BusyBoard.Websocket do
     do: {:reply, {:text, "pong"}, req, state}
 
   def websocket_handle({:text, msg}, req, state) do
-    IO.inspect(msg)
     {:ok, req, state}
   end
 
   def websocket_info({_pid, @ws_key, msg}, req, state) do
-    IO.inspect(msg) ; {:reply, {:text, msg}, req, state}
+    {:reply, {:text, msg}, req, state}
   end
 
   def websocket_info(msg, req, state), do: {:reply, {:text, msg}, req, state}
