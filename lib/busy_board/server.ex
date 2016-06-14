@@ -20,8 +20,6 @@ defmodule BusyBoard.Server do
 
   def put(person), do: GenServer.call(@mod, {:put, person})
 
-  def toggle(name), do: GenServer.call(@mod, {:toggle, name})
-
   # OTP callbacks
 
   def handle_call(:all, _from, table) do
@@ -38,12 +36,6 @@ defmodule BusyBoard.Server do
     {:reply, :ok, table}
   end
 
-  def handle_call({:toggle, name}, _from, table) do
-    [{^name, status}] = :ets.lookup table, name
-    :ets.insert(table, {name, toggle_status(status)})
-    {:reply, %{name: name, status: toggle_status(status)}, table}
-  end
-
   # Private helpers
 
   defp all_people(table) do
@@ -51,7 +43,4 @@ defmodule BusyBoard.Server do
       acc ++ [%{name: name, status: status}]
     end, [], table
   end
-
-  defp toggle_status(:available), do: :unavailable
-  defp toggle_status(:unavailable), do: :available
 end

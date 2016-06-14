@@ -31,7 +31,7 @@ defmodule BusyBoard.Websocket do
   def websocket_handle({:text, "ping"}, req, state),
     do: {:reply, {:text, "pong"}, req, state}
 
-  def websocket_handle({:text, msg}, req, state) do
+  def websocket_handle({:text, _msg}, req, state) do
     {:ok, req, state}
   end
 
