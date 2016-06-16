@@ -10,7 +10,7 @@ defmodule BusyBoard do
         :http,
         BusyBoard.Pipeline,
         [],
-        [dispatch: plug_dispatch, port: 4000]
+        [dispatch: plug_dispatch, port: Application.get_env(:busy_board, :port)]
       )
     ]
 
