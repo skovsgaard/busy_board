@@ -32,7 +32,8 @@ defmodule BusyBoard.Mixfile do
       {:plug, "~> 1.1"},
       {:cowboy, "~> 1.0"},
       {:poison, "~> 2.1"},
-      {:gproc, "~> 0.5"}
+      {:gproc, "~> 0.5"},
+      {:exrm, "~> 1.0"}
     ]
   end
 end
