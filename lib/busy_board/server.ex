@@ -6,7 +6,7 @@ defmodule BusyBoard.Server do
   def start_link do
     table = :people
     {:ok, pid} = GenServer.start_link(@mod, table, name: @mod)
-    {:ok, dets_label} = :dets.open_file(table, [file: "busy_board.dat"])
+    {:ok, dets_label} = :dets.open_file(table, [file: priv("busy_board.dat")])
     :ets.new(table, [:named_table, :protected])
     :dets.to_ets(dets_label, table)
     :ets.give_away(table, pid, :ok)
@@ -50,8 +50,10 @@ defmodule BusyBoard.Server do
   end
 
   defp persist(ets_label) do
-    {:ok, dets_label} = :dets.open_file(ets_label, [file: "busy_board.dat"])
+    {:ok, dets_label} = :dets.open_file(ets_label, [file: priv("busy_board.dat")])
     :ets.to_dets(ets_label, dets_label)
     :ok = :dets.close(dets_label)
   end
+
+  defp priv(filename), do: :busy_board |> :code.priv_dir |> Path.join(filename)
 end

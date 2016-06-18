@@ -1,7 +1,7 @@
 use Mix.Config
 
 config :busy_board,
-  port: 80,
+  port: 8080,
   root: "."
 
 config :logger,

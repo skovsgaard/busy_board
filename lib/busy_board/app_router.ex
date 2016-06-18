@@ -34,6 +34,9 @@ defmodule BusyBoard.AppRouter do
 
   # Private helpers
 
+  defp static(file_path),
+    do: Path.join(:code.priv_dir(:busy_board), "static/#{file_path}")
+
   defp redirect(conn, path) do
     conn
     |> Plug.Conn.put_resp_header("location", path)
@@ -52,11 +55,7 @@ defmodule BusyBoard.AppRouter do
     |> send_resp(status, content)
   end
 
-  defp read_static(filename) do
-    System.cwd
-    |> Path.join(~w(priv / static /) ++ [filename])
-    |> File.read!
-  end
+  defp read_static(filename), do: static(filename) |> File.read!
 
   defp api_all(conn), do: send_json(conn, 200, Server.all |> Poison.encode!)
 end
