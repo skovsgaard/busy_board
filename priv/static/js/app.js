@@ -1,3 +1,3 @@
 (() => {
-  socketeer("ws://localhost:4000/ws")
+  socketeer("ws://localhost:8080/ws")
 })()
