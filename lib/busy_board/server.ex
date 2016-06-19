@@ -21,7 +21,7 @@ defmodule BusyBoard.Server do
 
   def put(person), do: GenServer.call(@mod, {:put, person})
 
-  def persist, do: GenServer.call(@mod, :persist)
+  def del(name), do: GenServer.call(@mod, {:del, name})
 
   # OTP callbacks
 
@@ -32,7 +32,7 @@ defmodule BusyBoard.Server do
   def handle_call({:put, {name, status}}, _from, table) do
     :ets.insert table, {name, status}
     persist table
-    {:reply, table |> all_people |> Poison.encode!, table}
+    {:reply, encode_all(table), table}
   end
 
   def handle_call({:put, person}, _from, table) do
@@ -41,7 +41,15 @@ defmodule BusyBoard.Server do
     {:reply, :ok, table}
   end
 
+  def handle_call({:del, name}, _from, table) do
+    :ets.delete table, name
+    persist table
+    {:reply, encode_all(table), table}
+  end
+
   # Private helpers
+
+  defp encode_all(table), do: table |> all_people |> Poison.encode!
 
   defp all_people(table) do
     :ets.foldr fn {name, status}, acc ->

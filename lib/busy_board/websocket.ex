@@ -28,6 +28,12 @@ defmodule BusyBoard.Websocket do
     {:reply, {:text, all_people}, req, state}
   end
 
+  def websocket_handle({:text, "del:" <> name}, req, state) do
+    all_people = Server.del name
+    broadcast(all_people)
+    {:reply, {:text, all_people}, req, state}
+  end
+
   def websocket_handle({:text, "ping"}, req, state),
     do: {:reply, {:text, "pong"}, req, state}
 
