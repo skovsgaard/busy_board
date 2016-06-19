@@ -6,6 +6,7 @@ const socketeer = function(url) {
       console.log("Successfully connected to BusyBoard server")
       ws.send("all")
       util.setRegisterClick(ws)
+      util.setDeleteClick(ws)
       util.removeByClass(".err-box")
     }
 

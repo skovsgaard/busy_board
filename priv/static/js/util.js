@@ -63,6 +63,14 @@ const util = {
     return people;
   },
 
+  setDeleteClick: function(ws) {
+    document
+      .querySelector("#close-button")
+      .addEventListener("click", (ce) => {
+	ws.send("del:" + document.querySelector("#name").value)
+      })
+  },
+
   setPersonClick: function(person, ws) {
     document
       .getElementById(util.str(person.name, "-status"))
