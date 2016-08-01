@@ -17,10 +17,20 @@ defmodule BusyBoard.Server do
 
   # Client API
 
+  @doc """
+  Takes no arguments and returns all people currently stored on the server.
+  """
   def all, do: GenServer.call(@mod, :all)
 
+  @doc """
+  Takes a map or a pair containing either a field called "name" (for map)
+  or a name and status and returns all people stored on the server.
+  """
   def put(person), do: GenServer.call(@mod, {:put, person})
 
+  @doc """
+  Takes a name, deletes the associated entry on the server, and returns `:ok`.
+  """
   def del(name), do: GenServer.call(@mod, {:del, name})
 
   # OTP callbacks
